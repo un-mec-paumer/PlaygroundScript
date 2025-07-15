@@ -201,5 +201,5 @@ StPlaygroundPageTest >> testVersions [
 	self assert: page versions size equals: 3.
 	self assert: page versions first content equals: v1.
 	self assert: page versions second content equals: v2.	
-	self assert: page versions third content equals: v3
+	self assert: page versions third content equals: v3.
 ]
