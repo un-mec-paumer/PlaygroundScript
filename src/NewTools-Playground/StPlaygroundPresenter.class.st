@@ -203,12 +203,5 @@ StPlaygroundPresenter >> windowIcon [
 { #category : 'initialization' }
 StPlaygroundPresenter >> windowTitle [
 
-	^ title ifNil: [ ^ 'Playground' ]
-]
-
-{ #category : 'accessing' }
-StPlaygroundPresenter >> windowTitle: aString [
-
-	title := aString.
-	self update
+	^ 'Playground'
 ]

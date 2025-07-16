@@ -13,7 +13,8 @@ Class {
 		'toggleLineNumberButton',
 		'page',
 		'activationBlock',
-		'loading'
+		'loading',
+		'script'
 	],
 	#classVars : [
 		'CacheDirectory'
@@ -32,6 +33,7 @@ StPlaygroundPagePresenter class >> baseToolbarCommands [
 		StPlaygroundBindingsCommand.				
 		StPlaygroundVersionsCommand.
 		StPlaygroundPagesCommand.
+		StPlaygroundScriptCommand.
 	}
 ]
 
@@ -93,13 +95,6 @@ StPlaygroundPagePresenter class >> openContents: aString [
 		open
 ]
 
-{ #category : 'instance creation' }
-StPlaygroundPagePresenter class >> openUrl: anUrl [ [
-
-	self openContents: (ZnEasy get: anUrl ) contents
-]
-]
-
 { #category : 'tools registry' }
 StPlaygroundPagePresenter class >> registerToolsOn: registry [
 	"Add ourselves to registry. See [Smalltalk tools]" 
@@ -152,11 +147,6 @@ StPlaygroundPagePresenter >> basicPage: aPage [
 ]
 
 { #category : 'accessing' }
-StPlaygroundPagePresenter >> contents [
-	^ text text
-]
-
-{ #category : 'accessing' }
 StPlaygroundPagePresenter >> contents: aString [
 
 	text text: aString
@@ -203,11 +193,17 @@ StPlaygroundPagePresenter >> hasOutputActivationPort [
 
 { #category : 'initialization' }
 StPlaygroundPagePresenter >> initialize [
-	loading := false.
- 	super initialize.
+	|workspaceVariable1 workspaceVariable2|
+   loading := false.
+   super initialize.
+	workspaceVariable1 := (WorkspaceVariable key: #thisPlayground value: self ).
+	workspaceVariable2 := (WorkspaceVariable key: #thisPlaygroundModel value: (self text interactionModel)).
 	
 	
-   
+	script := StPlaygroundScript init: {workspaceVariable1 . workspaceVariable2 } asOrderedCollection text: text.
+	script newDefaultClass.
+	
+	"text interactionModel addBindings: {workspaceVariable1 . workspaceVariable2}."
 	  
 ]
 
@@ -340,6 +336,11 @@ StPlaygroundPagePresenter >> removeAllBindings [
 
 	self interactionModel removeAllBindings.
 	self text refreshStyling.
+]
+
+{ #category : 'accessing' }
+StPlaygroundPagePresenter >> script [ 
+	^ script.
 ]
 
 { #category : 'accessing' }

@@ -55,17 +55,17 @@ StPlaygroundBaseTest >> openInstance [
 { #category : 'running' }
 StPlaygroundBaseTest >> setUp [
 	super setUp.
-
+	
 	backendForTest := SpMorphicBackendForTest new.
 	application := StPharoApplication new.
 	
 	memoryFileSystem := FileSystem memory.
 	self initializeMemoryFileSystem: memoryFileSystem.
+		
 	presenter := self classToTest basicNew. 
 	self initializeInstanceBeforeInitialization: presenter.
 	presenter application: application.
-	"presenter initialize."
-
+	presenter initialize.
 	self initializeInstance: presenter
 ]
 

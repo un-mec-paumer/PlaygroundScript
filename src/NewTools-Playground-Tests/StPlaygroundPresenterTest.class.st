@@ -26,13 +26,6 @@ StPlaygroundPresenterTest >> newPlayground [
 		
 ]
 
-{ #category : 'running' }
-StPlaygroundPresenterTest >> setUp [ 
-	super setUp.
-	
-	presenter initialize.
-]
-
 { #category : 'tests' }
 StPlaygroundPresenterTest >> testContents [
 

@@ -2,7 +2,8 @@ Class {
 	#name : 'StPlaygroundInteractionModelTest',
 	#superclass : 'SpCodeScriptingInteractionModelTest',
 	#instVars : [
-		'application'
+		'application',
+		'model'
 	],
 	#category : 'NewTools-Playground-Tests',
 	#package : 'NewTools-Playground-Tests'

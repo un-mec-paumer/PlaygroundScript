@@ -16,10 +16,8 @@ StPlaygroundBindingsPresenterTest >> classToTest [
 
 { #category : 'running' }
 StPlaygroundBindingsPresenterTest >> setUp [
-	super setUp.
-
 	owner := StPlaygroundPagePresenter new.
-	owner interactionModel addBindingNamed: #this with: 0.
+	
 	presenter := ((self classToTest) 
 		newApplication: owner application 
 		model: owner)
@@ -28,7 +26,7 @@ StPlaygroundBindingsPresenterTest >> setUp [
 { #category : 'tests' }
 StPlaygroundBindingsPresenterTest >> testInit [
 
-	self assert: presenter isNotNil.
+	self assert: presenter notNil.
 	self assert: (presenter isKindOf: self classToTest )
 ]
 
@@ -36,6 +34,7 @@ StPlaygroundBindingsPresenterTest >> testInit [
 StPlaygroundBindingsPresenterTest >> testIsLocalBinding [
 	|selected|
 	presenter selectedBindingIsLocal ifFalse: [ presenter moveSelectedBindingToLocalScope ].
+	
 	
 	selected := presenter selectedBinding.
 	self assert: (presenter isLocalBinding: selected).
@@ -99,7 +98,7 @@ StPlaygroundBindingsPresenterTest >> testRemoveAllBindings [
 { #category : 'tests' }
 StPlaygroundBindingsPresenterTest >> testRemoveSelectedBinding [
 	|selected|
-	
+	presenter selectedBindingIsLocal ifFalse: [ presenter moveSelectedBindingToLocalScope ].
 	
 	selected := presenter selectedBinding.
 	self assert: (owner interactionModel hasBindingOf: selected key).
@@ -107,7 +106,11 @@ StPlaygroundBindingsPresenterTest >> testRemoveSelectedBinding [
 	presenter removeSelectedBinding.
 	
 	self deny: (owner interactionModel hasBindingOf: selected key). 
-
+	
+	owner interactionModel addBinding: selected.
+	
+	selected := presenter selectedBinding.
+	self assert: (owner interactionModel hasBindingOf: selected key).
 ]
 
 { #category : 'tests' }
@@ -122,7 +125,7 @@ StPlaygroundBindingsPresenterTest >> testScopeNameFor [
 	
 	presenter moveSelectedBindingToSharedScope.
 	selected := presenter selectedBinding.
-	self assert: (selected key) equals: 'this'.
+	self assert: (selected key) equals: 'thisPlaygroundModel'.
 	
 	self assert: (presenter scopeNameFor: selected) equals: 'shared'.
 	
@@ -136,7 +139,7 @@ StPlaygroundBindingsPresenterTest >> testSelectedBinding [
 	selected := presenter selectedBinding.
 	
 	self assert: (selected isKindOf: WorkspaceVariable).
-	self assert: selected key equals: #this .
+	self assert: selected key equals: #thisPlaygroundModel .
 ]
 
 { #category : 'tests' }

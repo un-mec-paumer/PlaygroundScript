@@ -26,13 +26,6 @@ StPlaygroundPagesPresenterTest >> initializeMemoryFileSystem: aFileSystem [
 		stream << 'Test 2"' ].
 ]
 
-{ #category : 'running' }
-StPlaygroundPagesPresenterTest >> setUp [ 
-	super setUp.
-	
-	presenter initialize.
-]
-
 { #category : 'tests' }
 StPlaygroundPagesPresenterTest >> testLoadPage [
 	| loaded |
